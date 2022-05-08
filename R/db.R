@@ -41,16 +41,16 @@ dbInit <- function(conn, path, pattern = "\\.(rds|csv|gz)$", overwrite = FALSE, 
 #' @export
 #'
 dbExport <- function(conn, sql, file, verbose = TRUE, ...){
-
   if(verbose)
     cat("Running query... ")
+  
   if(endsWith(sql, ".sql"))
     sql <- readChar(sql, file.info(sql)$size)
   x <- dbGetQuery(conn, sql)
 
   if(verbose)
     cat("writing file... ")
-  data.table::fwrite(x, file = file, showProgress = verbose, ...)
+  fwrite(x, file = file, showProgress = verbose, ...)
 
   if(verbose)
     cat(sprintf("\n\nFile saved in %s\n", file))
@@ -84,7 +84,7 @@ dbImportTable <- function(conn, file, overwrite, verbose, ...) {
   if(endsWith(file, ".rds"))
     x <- readRDS(file)
   else
-    x <- data.table::fread(file = file, showProgress = verbose, ...)
+    x <- fread(file = file, showProgress = FALSE, ...)
 
   if(verbose)
     cat("  ->  sanitizing data...\n")
@@ -149,6 +149,7 @@ dbCreateIndex <- function(conn, name){
 #' \code{data.frame}
 #'
 dbSanitizeData <- function(x){
+  x <- as.data.frame(x)
   colnames(x) <- tolower(colnames(x))
 
   for(i in colnames(x))
@@ -158,5 +159,5 @@ dbSanitizeData <- function(x){
   if("itemlongdesc" %in% colnames(x))
     x$itemlongdesc <- gsub("[\x80-\xff]", "", x$itemlongdesc)
 
-  return(as.data.frame(x))
+  return(x)
 }
