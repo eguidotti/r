@@ -7,6 +7,7 @@
 #' @param pattern an optional regular expression. Only file names which match the regular expression will be used.
 #' @param overwrite if \code{TRUE}, an existing table of the same name will be overwritten. This argument doesn't change behavior if the table does not exist yet.
 #' @param verbose if \code{TRUE}, print on progress.
+#' @param na.strings a character vector of strings which are to be interpreted as \code{NA} values by \code{\link[data.table]{fread}}.
 #' @param ... additional arguments passed to \code{\link[data.table]{fread}}.
 #'
 #' @returns
@@ -22,9 +23,9 @@
 #'
 #' @export
 #'
-dbInit <- function(conn, path, pattern = "\\.(rds|csv|gz)$", overwrite = FALSE, verbose = TRUE, ...) {
+dbInit <- function(conn, path, pattern = "\\.(rds|csv|gz)$", overwrite = FALSE, verbose = TRUE,  na.strings = "", ...) {
   for(file in list.files(path = path, pattern = pattern, full.names = TRUE))
-    dbImportTable(conn, file = file, overwrite = overwrite, verbose = verbose, ...)
+    dbImportTable(conn, file = file, overwrite = overwrite, verbose = verbose, na.strings = na.strings, ...)
 }
 
 #' Export SQL Query to file
@@ -62,12 +63,13 @@ dbExport <- function(conn, sql, file, verbose = TRUE, ...){
 #' @param file the file to import.
 #' @param overwrite if \code{TRUE}, an existing table of the same name will be overwritten. This argument doesn't change behavior if the table does not exist yet.
 #' @param verbose if \code{TRUE}, print on progress.
+#' @param na.strings a character vector of strings which are to be interpreted as \code{NA} values by \code{\link[data.table]{fread}}.
 #' @param ... additional arguments passed to \code{\link[data.table]{fread}}.
 #'
 #' @returns
 #' \code{NULL}
 #'
-dbImportTable <- function(conn, file, overwrite, verbose, ...) {
+dbImportTable <- function(conn, file, overwrite, verbose, na.strings, ...) {
   if(verbose)
     cat(sprintf("Import: %s\n", file))
 
@@ -84,7 +86,7 @@ dbImportTable <- function(conn, file, overwrite, verbose, ...) {
   if(endsWith(file, ".rds"))
     x <- readRDS(file)
   else
-    x <- fread(file = file, showProgress = FALSE, ...)
+    x <- fread(file = file, na.strings = na.strings, showProgress = FALSE, ...)
 
   if(verbose)
     cat("  ->  sanitizing data...\n")

@@ -10,6 +10,7 @@ dbInit(
   pattern = "\\\\.(rds|csv|gz)$",
   overwrite = FALSE,
   verbose = TRUE,
+  na.strings = "",
   ...
 )
 }
@@ -23,6 +24,8 @@ dbInit(
 \item{overwrite}{if \code{TRUE}, an existing table of the same name will be overwritten. This argument doesn't change behavior if the table does not exist yet.}
 
 \item{verbose}{if \code{TRUE}, print on progress.}
+
+\item{na.strings}{a character vector of strings which are to be interpreted as \code{NA} values by \code{\link[data.table]{fread}}.}
 
 \item{...}{additional arguments passed to \code{\link[data.table]{fread}}.}
 }
