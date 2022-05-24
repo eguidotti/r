@@ -23,7 +23,7 @@ texreg <- function(l, file = NULL, tstat = FALSE, ...){
   tex <- texreg::texreg(l, ...)
   
   if(tstat)
-    tex <- gsub("\\$\\(([0-9\\.]+?)\\)\\$", "$[\\1]$", tex)
+    tex <- gsub("\\$\\(([^\s]+?)\\)\\$", "$[\\1]$", tex)
   
   if(!is.null(file))
     print(tex, file = file)
