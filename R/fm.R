@@ -69,7 +69,8 @@ fm2tex <- function(x, scale = 1){
 #' @param x the output of \link{fm}.
 #' @param variable the name of the column to plot.
 #' @param n number of periods for rolling averages.
-#' @param alpha transparency of ribbon.
+#' @param ci confidence intervals to plot.
+#' @param alpha transparency of confidence intervals.
 #' @param ... additional arguments passed to \code{\link[ggplot2]{geom_ribbon}}
 #' 
 #' @returns 
@@ -79,7 +80,7 @@ fm2tex <- function(x, scale = 1){
 #' 
 #' @export
 #' 
-fm2fig <- function(x, variable, n = 1, alpha = 0.1, ...){
+fm2fig <- function(x, variable, n = 1, ci = 0.95, alpha = 0.1, ...){
   
   cols <- c(1, which(colnames(x) == variable))
   dt <- x[order(x[,1]), ..cols]
@@ -92,8 +93,8 @@ fm2fig <- function(x, variable, n = 1, alpha = 0.1, ...){
     
     y.num <- frollsum(!is.na(y), n = n)
     y.std <- frollapply(y, n = n, sd, na.rm = TRUE) / sqrt(y.num)
-    y.min <- y.mean - 1.96 * y.std
-    y.max <- y.mean + 1.96 * y.std
+    y.min <- y.mean + qnorm(p = (1-ci) / 2) * y.std
+    y.max <- y.mean - qnorm(p = (1-ci) / 2) * y.std
     
     nas <- 1:n-1
     x <- x[-nas]

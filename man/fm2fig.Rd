@@ -4,7 +4,7 @@
 \alias{fm2fig}
 \title{Convert Fama-Macbeth regression to ggplot object}
 \usage{
-fm2fig(x, variable, n = 1, alpha = 0.1, ...)
+fm2fig(x, variable, n = 1, ci = 0.95, alpha = 0.1, ...)
 }
 \arguments{
 \item{x}{the output of \link{fm}.}
@@ -13,7 +13,9 @@ fm2fig(x, variable, n = 1, alpha = 0.1, ...)
 
 \item{n}{number of periods for rolling averages.}
 
-\item{alpha}{transparency of ribbon.}
+\item{ci}{confidence intervals to plot.}
+
+\item{alpha}{transparency of confidence intervals.}
 
 \item{...}{additional arguments passed to \code{\link[ggplot2]{geom_ribbon}}}
 }
