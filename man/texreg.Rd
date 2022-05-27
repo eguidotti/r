@@ -4,14 +4,16 @@
 \alias{texreg}
 \title{Convert regression output to a LaTeX table}
 \usage{
-texreg(l, file = NULL, tstat = FALSE, ...)
+texreg(l, file = NULL, tstat = FALSE, scale = 1, ...)
 }
 \arguments{
 \item{l}{a statistical model or a list of statistical models. Lists of models can be specified as \code{l = list(model.1, model.2, ...)}. Different object types can also be mixed.}
 
 \item{file}{using this argument, the resulting table is written to a file rather than to the \code{R} prompt. The file name can be specified as a character string.}
 
-\item{tstat}{if \code{TRUE}, prints t-stats instead of standard errors,}
+\item{tstat}{if \code{TRUE}, prints t-stats instead of standard errors.}
+
+\item{scale}{multiply the regression coefficients (and standard errors) by this value.}
 
 \item{...}{additional arguments passed to \code{\link[texreg]{texreg}}.}
 }

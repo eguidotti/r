@@ -11,7 +11,7 @@
 #' 
 #' @export
 #' 
-fm <- function(x, formula, by, weights = NULL, nmin = 100){
+fm <- function(x, formula, by, weights = NULL, nmin = 0){
   
   if(!is.null(weights))
     weights <- as.name(weights)
@@ -39,14 +39,13 @@ fm <- function(x, formula, by, weights = NULL, nmin = 100){
 #' Convert Fama-Macbeth regression to TexReg object
 #' 
 #' @param x the output of \link{fm}.
-#' @param scale multiply the regression coefficients by this value.
 #' 
 #' @returns 
 #' output of \code{\link[texreg]{createTexreg}}
 #' 
 #' @export
 #' 
-fm2tex <- function(x, scale = 1){
+fm2texreg <- function(x){
   
   x.coef <- x[,-(1:2)]
   coef <- apply(x.coef, 2, mean)
@@ -54,8 +53,8 @@ fm2tex <- function(x, scale = 1){
   
   texreg::createTexreg(
     coef.names = colnames(x.coef),
-    coef = coef * scale, 
-    se = se * scale, 
+    coef = coef, 
+    se = se, 
     pvalues = 2 * pnorm(abs(coef/se), lower.tail = FALSE), 
     gof.names = c("N. Periods", "Min Obs.", "Median Obs.", "Max Obs."), 
     gof = c(nrow(x.coef), min(x$NOBS), median(x$NOBS), max(x$NOBS)), 
@@ -80,7 +79,7 @@ fm2tex <- function(x, scale = 1){
 #' 
 #' @export
 #' 
-fm2fig <- function(x, variable, n = 1, ci = 0.95, alpha = 0.1, ...){
+fm2ggplot <- function(x, variable, n = 1, ci = 0.95, alpha = 0.1, ...){
   
   cols <- c(1, which(colnames(x) == variable))
   dt <- x[order(x[,1]), ..cols]

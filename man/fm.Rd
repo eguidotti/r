@@ -4,7 +4,7 @@
 \alias{fm}
 \title{Fama-Macbeth regression}
 \usage{
-fm(x, formula, by, weights = NULL, nmin = 100)
+fm(x, formula, by, weights = NULL, nmin = 0)
 }
 \arguments{
 \item{x}{a \code{data.table}}
