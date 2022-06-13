@@ -18,7 +18,7 @@
 #' library(RSQLite)
 #' conn <- dbConnect(RSQLite::SQLite(), "crsp.db")
 #' path <- "path/to/crsp/sazYYYYMM_r"
-#' import(conn, path)
+#' dbInit(conn, path)
 #' }
 #'
 #' @export
