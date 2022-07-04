@@ -14,5 +14,6 @@ Depends:
 Imports: 
     DBI,
     FKF,
+    R.utils,
     texreg,
     ggplot2
