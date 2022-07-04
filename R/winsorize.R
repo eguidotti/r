@@ -19,5 +19,5 @@ winsorize <- function(x, pmin = 0.01, pmax = 0.99) {
   xbot <- y[ibot]
   xtop <- y[itop]
 
-  ifelse(x <= xbot, xbot, ifelse(x >= xtop, xtop, x))
+  as.numeric(ifelse(x <= xbot, xbot, ifelse(x >= xtop, xtop, x)))
 }
