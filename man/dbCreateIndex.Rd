@@ -2,18 +2,20 @@
 % Please edit documentation in R/db.R
 \name{dbCreateIndex}
 \alias{dbCreateIndex}
-\title{Create Unique Index}
+\title{Create Index}
 \usage{
-dbCreateIndex(conn, name)
+dbCreateIndex(conn, name, index = NULL)
 }
 \arguments{
 \item{conn}{a \code{DBIConnection} object, as returned by \code{\link[DBI]{dbConnect}}.}
 
 \item{name}{the table name.}
+
+\item{index}{vector of column names to index the table.}
 }
 \value{
 \code{NULL}
 }
 \description{
-Create Unique Index
+Create Index
 }

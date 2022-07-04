@@ -104,15 +104,18 @@ dbImportTable <- function(conn, file, overwrite, verbose, na.strings, ...) {
     cat("  ->  done!\n")
 }
 
-#' Create Unique Index
+#' Create Index
 #'
 #' @param conn a \code{DBIConnection} object, as returned by \code{\link[DBI]{dbConnect}}.
 #' @param name the table name.
+#' @param index vector of column names to index the table.
 #'
 #' @returns
 #' \code{NULL}
+#' 
+#' @export
 #'
-dbCreateIndex <- function(conn, name){
+dbCreateIndex <- function(conn, name, index = NULL){
   pk <- c(
     "sfz_del" = "KYPERMNO, DLSTDT",
     "sfz_mdel" = "KYPERMNO, MDLSTDT",
@@ -136,11 +139,19 @@ dbCreateIndex <- function(conn, name){
     "sfz_mind" = "KYINDNO, MCALDT"
   )
 
-  if(!name %in% names(pk))
+  if(!is.null(index))
+    cols <- paste(index, collapse = ", ")
+  else if(name %in% names(pk))
+    cols <- pk[name]
+  else
     return(invisible())
-
-  sql <- sprintf("CREATE UNIQUE INDEX idx_%s ON %s (%s)", name, name, pk[name])
-  dbExecute(conn, sql)
+  
+  if(dbExistsTable(conn, name = name)){
+    sql <- sprintf("CREATE INDEX idx_%s ON %s (%s)", name, name, cols)
+    dbExecute(conn, sql)  
+  }
+  
+  return(invisible())
 }
 
 #' Sanitize Data
