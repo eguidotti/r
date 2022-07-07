@@ -20,6 +20,7 @@ texreg <- function(l, file = NULL, tstat = FALSE, scale = 1, ...){
   
   for(i in 1:length(l)){
     
+    l[[i]] <- texreg::extract(l[[i]])
     l[[i]]@se <- l[[i]]@se * scale
     l[[i]]@coef <- l[[i]]@coef * scale
 
