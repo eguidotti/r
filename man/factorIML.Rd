@@ -4,7 +4,7 @@
 \alias{factorIML}
 \title{Factor: Illiquid minus Liquid}
 \usage{
-factorIML(illiq, sdret, ret, by, weight = 1)
+factorIML(illiq, sdret, ret, by, weight = 1, nyse = TRUE)
 }
 \arguments{
 \item{illiq}{the illiquidity measure}
@@ -16,6 +16,8 @@ factorIML(illiq, sdret, ret, by, weight = 1)
 \item{by}{the time index}
 
 \item{weight}{the weight for value-weighted portfolios}
+
+\item{nyse}{logical vector representing whether the stock is listed in NYSE. It is used for the computation of breakpoints.}
 }
 \value{
 Factor returns for each \code{by}-time

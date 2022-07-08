@@ -4,7 +4,7 @@
 \alias{factorEMC}
 \title{Factor: Expensive minus Cheap}
 \usage{
-factorEMC(spread, sdret, ret, by, weight = 1)
+factorEMC(spread, sdret, ret, by, weight = 1, nyse = TRUE)
 }
 \arguments{
 \item{spread}{the effective bid-ask spread}
@@ -16,6 +16,8 @@ factorEMC(spread, sdret, ret, by, weight = 1)
 \item{by}{the time index}
 
 \item{weight}{the weight for value-weighted portfolios}
+
+\item{nyse}{logical vector representing whether the stock is listed in NYSE. It is used for the computation of breakpoints.}
 }
 \value{
 Factor returns for each \code{by}-time

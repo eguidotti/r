@@ -5,14 +5,15 @@
 #' @param ret the return at time T+1
 #' @param by the time index
 #' @param weight the weight for value-weighted portfolios
+#' @param nyse logical vector representing whether the stock is listed in NYSE. It is used for the computation of breakpoints.
 #' 
 #' @return Factor returns for each \code{by}-time
 #' 
 #' @export
 #' 
-factorEMC <- function(spread, sdret, ret, by, weight = 1){
+factorEMC <- function(spread, sdret, ret, by, weight = 1, nyse = TRUE){
   
-  x <- factorIML(illiq = spread, sdret = sdret, ret = ret, by = by, weight = weight)
+  x <- factorIML(illiq = spread, sdret = sdret, ret = ret, by = by, weight = weight, nyse = nyse)
   
   setnames(x, old = "IML", new = "EMC")
   return(x)
@@ -27,23 +28,25 @@ factorEMC <- function(spread, sdret, ret, by, weight = 1){
 #' @param ret the return at time T+1
 #' @param by the time index
 #' @param weight the weight for value-weighted portfolios
+#' @param nyse logical vector representing whether the stock is listed in NYSE. It is used for the computation of breakpoints.
 #' 
 #' @return Factor returns for each \code{by}-time
 #' 
 #' @export
 #' 
-factorIML <- function(illiq, sdret, ret, by, weight = 1){
+factorIML <- function(illiq, sdret, ret, by, weight = 1, nyse = TRUE){
   
   x <- na.omit(data.table(
     ILLIQ = illiq, 
     SDRET = sdret,
     RET = ret, 
     W = weight, 
+    NYSE = nyse,
     BY = by, 
     key = "BY"))
   
-  x[, PTF.SDRET := ntile(SDRET, n = c(0, 0.3, 0.7, 1)), by = BY]
-  x[, PTF.ILLIQ := ntile(ILLIQ, n = 5), by = .(BY, PTF.SDRET)]
+  x[, PTF.SDRET := ntile(SDRET, n = c(0, 0.3, 0.7, 1), y = SDRET[NYSE]), by = BY]
+  x[, PTF.ILLIQ := ntile(ILLIQ, n = 5, y = ILLIQ[NYSE]), by = .(BY, PTF.SDRET)]
   
   x <- x[!is.na(PTF.SDRET) & !is.na(PTF.ILLIQ)]
   x <- x[, .(RET = weighted.mean(RET, w = W)), by = .(BY, PTF.SDRET, PTF.ILLIQ)]
@@ -80,7 +83,7 @@ factorSMB <- function(me, beme, ret, by, weight = 1, nyse = TRUE){
     key = "BY"))
   
   x[, PTF.SIZE := ntile(ME, n = 2, y = ME[NYSE]), by = BY]
-  x[, PTF.BEME := ntile(BEME, n = c(0, 0.3, 0.7, 1), y = BEME[NYSE]), by = .(BY, PTF.SIZE)]
+  x[, PTF.BEME := ntile(BEME, n = c(0, 0.3, 0.7, 1), y = BEME[NYSE]), by = BY]
   
   x <- x[!is.na(PTF.SIZE) & !is.na(PTF.BEME)]
   x <- x[, .(RET = weighted.mean(RET, w = W)), by = .(BY, PTF.SIZE, PTF.BEME)]
@@ -117,7 +120,7 @@ factorHML <- function(me, beme, ret, by, weight = 1, nyse = TRUE){
     key = "BY"))
   
   x[, PTF.SIZE := ntile(ME, n = 2, y = ME[NYSE]), by = BY]
-  x[, PTF.BEME := ntile(BEME, n = c(0, 0.3, 0.7, 1), y = BEME[NYSE]), by = .(BY, PTF.SIZE)]
+  x[, PTF.BEME := ntile(BEME, n = c(0, 0.3, 0.7, 1), y = BEME[NYSE]), by = BY]
   
   x <- x[!is.na(PTF.SIZE) & !is.na(PTF.BEME)]
   x <- x[, .(RET = weighted.mean(RET, w = W)), by = .(BY, PTF.SIZE, PTF.BEME)]
