@@ -69,8 +69,10 @@ fm2texreg <- function(x){
 #' @param variable the name of the column to plot.
 #' @param n number of periods for rolling averages.
 #' @param ci confidence intervals to plot.
+#' @param fill color of the confidence intervals.
 #' @param alpha transparency of confidence intervals.
-#' @param ... additional arguments passed to \code{\link[ggplot2]{geom_ribbon}}
+#' @param gg a \code{\link[ggplot2]{ggplot}} object to initialize the plot.
+#' @param ... additional arguments passed to \code{\link[ggplot2]{geom_line}} aesthetic mappings.
 #' 
 #' @returns 
 #' \code{\link[ggplot2]{ggplot}} object
@@ -79,7 +81,7 @@ fm2texreg <- function(x){
 #' 
 #' @export
 #' 
-fm2ggplot <- function(x, variable, n = 1, ci = 0.95, alpha = 0.1, ...){
+fm2ggplot <- function(x, variable, n = 1, ci = 0.95, fill = "grey", alpha = 0.1, gg = ggplot(), ...){
   
   cols <- c(1, which(colnames(x) == variable))
   dt <- x[order(x[,1]), ..cols]
@@ -103,8 +105,8 @@ fm2ggplot <- function(x, variable, n = 1, ci = 0.95, alpha = 0.1, ...){
     
   }
   
-  ggplot(mapping = aes(x = x, y = y.mean)) +
-    geom_line() + 
-    geom_ribbon(aes(ymin = y.min, ymax = y.max), alpha = alpha, ...)
+  gg +
+    geom_line(aes(x = x, y = y.mean, ...)) + 
+    geom_ribbon(aes(x = x, ymin = y.min, ymax = y.max), fill = fill, alpha = alpha)
   
 }

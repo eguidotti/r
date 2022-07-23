@@ -4,7 +4,16 @@
 \alias{fm2ggplot}
 \title{Convert Fama-Macbeth regression to ggplot object}
 \usage{
-fm2ggplot(x, variable, n = 1, ci = 0.95, alpha = 0.1, ...)
+fm2ggplot(
+  x,
+  variable,
+  n = 1,
+  ci = 0.95,
+  fill = "grey",
+  alpha = 0.1,
+  gg = ggplot(),
+  ...
+)
 }
 \arguments{
 \item{x}{the output of \link{fm}.}
@@ -15,9 +24,13 @@ fm2ggplot(x, variable, n = 1, ci = 0.95, alpha = 0.1, ...)
 
 \item{ci}{confidence intervals to plot.}
 
+\item{fill}{color of the confidence intervals.}
+
 \item{alpha}{transparency of confidence intervals.}
 
-\item{...}{additional arguments passed to \code{\link[ggplot2]{geom_ribbon}}}
+\item{gg}{a \code{\link[ggplot2]{ggplot}} object to initialize the plot.}
+
+\item{...}{additional arguments passed to \code{\link[ggplot2]{geom_line}} aesthetic mappings.}
 }
 \value{
 \code{\link[ggplot2]{ggplot}} object
