@@ -4,31 +4,20 @@
 \alias{fm2ggplot}
 \title{Convert Fama-Macbeth regression to ggplot object}
 \usage{
-fm2ggplot(
-  x,
-  variable,
-  n = 1,
-  ci = 0.95,
-  fill = "grey",
-  alpha = 0.1,
-  gg = ggplot(),
-  ...
-)
+fm2ggplot(x, y, n = 1, ci = 0.95, fill = "grey", alpha = 0.1, ...)
 }
 \arguments{
-\item{x}{the output of \link{fm}.}
+\item{x}{vector of time index (x-axis).}
 
-\item{variable}{the name of the column to plot.}
+\item{y}{numeric vector of estimates (y-axis).}
 
 \item{n}{number of periods for rolling averages.}
 
-\item{ci}{confidence intervals to plot.}
+\item{ci}{level of the confidence intervals.}
 
 \item{fill}{color of the confidence intervals.}
 
 \item{alpha}{transparency of confidence intervals.}
-
-\item{gg}{a \code{\link[ggplot2]{ggplot}} object to initialize the plot.}
 
 \item{...}{additional arguments passed to \code{\link[ggplot2]{geom_line}} aesthetic mappings.}
 }

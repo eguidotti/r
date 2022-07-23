@@ -65,13 +65,12 @@ fm2texreg <- function(x){
 
 #' Convert Fama-Macbeth regression to ggplot object
 #' 
-#' @param x the output of \link{fm}.
-#' @param variable the name of the column to plot.
+#' @param x vector of time index (x-axis).
+#' @param y numeric vector of estimates (y-axis).
 #' @param n number of periods for rolling averages.
-#' @param ci confidence intervals to plot.
+#' @param ci level of the confidence intervals.
 #' @param fill color of the confidence intervals.
 #' @param alpha transparency of confidence intervals.
-#' @param gg a \code{\link[ggplot2]{ggplot}} object to initialize the plot.
 #' @param ... additional arguments passed to \code{\link[ggplot2]{geom_line}} aesthetic mappings.
 #' 
 #' @returns 
@@ -81,13 +80,11 @@ fm2texreg <- function(x){
 #' 
 #' @export
 #' 
-fm2ggplot <- function(x, variable, n = 1, ci = 0.95, fill = "grey", alpha = 0.1, gg = ggplot(), ...){
+fm2ggplot <- function(x, y, n = 1, ci = 0.95, fill = "grey", alpha = 0.1, ...){
   
-  cols <- c(1, which(colnames(x) == variable))
-  dt <- x[order(x[,1]), ..cols]
-  
-  x <- dt[[1]]
-  y <- dt[[2]]
+  i <- order(x)
+  x <- x[i]
+  y <- y[i]
   
   y.min <- y.max <- y.mean <- frollmean(y, n = n, na.rm = TRUE)
   if(n > 1){
@@ -105,8 +102,9 @@ fm2ggplot <- function(x, variable, n = 1, ci = 0.95, fill = "grey", alpha = 0.1,
     
   }
   
-  gg +
-    geom_line(aes(x = x, y = y.mean, ...)) + 
-    geom_ribbon(aes(x = x, ymin = y.min, ymax = y.max), fill = fill, alpha = alpha)
+  list(
+    geom_line(aes(x = x, y = y.mean, ...), inherit.aes = FALSE),
+    geom_ribbon(aes(x = x, ymin = y.min, ymax = y.max), fill = fill, alpha = alpha, inherit.aes = FALSE)
+  )
   
 }
