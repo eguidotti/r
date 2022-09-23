@@ -4,16 +4,7 @@
 \alias{swrite}
 \title{Safe CSV writer}
 \usage{
-swrite(
-  x,
-  file,
-  key = NULL,
-  na = "",
-  compress = FALSE,
-  archive = FALSE,
-  verbose = FALSE,
-  ...
-)
+swrite(x, file, key = NULL, na = "", compress = FALSE, ...)
 }
 \arguments{
 \item{x}{the data to write. It gets internally coerced to \code{data.table} preserving col names but not row names.}
@@ -26,12 +17,11 @@ swrite(
 
 \item{compress}{if \code{TRUE}, the file format is gzipped csv. Default \code{FALSE}.}
 
-\item{archive}{if \code{TRUE}, saves the \code{file} in a directory named with the current date in the format YYYYMMDD. Default \code{FALSE}.}
-
-\item{verbose}{if \code{TRUE}, prints \code{\link[base]{file.info}} on success. Default \code{FALSE}.}
-
 \item{...}{additional arguments passed to \code{\link[data.table]{fwrite}}.}
 }
+\value{
+The file name.
+}
 \description{
-Safe CSV writer
+Sorts by key and checks duplicates. Does not overwrite existing file.
 }
