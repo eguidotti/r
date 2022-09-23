@@ -6,7 +6,7 @@
 #' @param na the string to use for missing values in the data. 
 #' @param compress if \code{TRUE}, the file format is gzipped csv. Default \code{FALSE}.
 #' @param archive if \code{TRUE}, saves the \code{file} in a directory named with the current date in the format YYYYMMDD. Default \code{FALSE}.
-#' @param verbose if \coe{TRUE}, prints \code{\link[base]{file.info}} on success. Default \code{FALSE}.
+#' @param verbose if \code{TRUE}, prints \code{\link[base]{file.info}} on success. Default \code{FALSE}.
 #' @param ... additional arguments passed to \code{\link[data.table]{fwrite}}.
 #' 
 #' @export
