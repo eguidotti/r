@@ -4,18 +4,22 @@
 \alias{dbImportTable}
 \title{Import Table}
 \usage{
-dbImportTable(conn, file, overwrite, verbose, na.strings, ...)
+dbImportTable(conn, table, name, index, overwrite, verbose, na.strings, ...)
 }
 \arguments{
-\item{conn}{a \code{DBIConnection} object, as returned by \code{\link[DBI]{dbConnect}}.}
+\item{conn}{\code{DBIConnection} object, as returned by \code{\link[DBI]{dbConnect}}.}
 
-\item{file}{the file to import.}
+\item{table}{\code{data.table}, \code{data.frame}, or path to a data file.}
+
+\item{name}{the table name.}
+
+\item{index}{character vector of column names to use as index.}
 
 \item{overwrite}{if \code{TRUE}, an existing table of the same name will be overwritten. This argument doesn't change behavior if the table does not exist yet.}
 
 \item{verbose}{if \code{TRUE}, print on progress.}
 
-\item{na.strings}{a character vector of strings which are to be interpreted as \code{NA} values by \code{\link[data.table]{fread}}.}
+\item{na.strings}{character vector of strings which are to be interpreted as \code{NA} values by \code{\link[data.table]{fread}}.}
 
 \item{...}{additional arguments passed to \code{\link[data.table]{fread}}.}
 }

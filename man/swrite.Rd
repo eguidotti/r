@@ -4,7 +4,7 @@
 \alias{swrite}
 \title{Safe CSV writer}
 \usage{
-swrite(x, file, key = NULL, na = "", compress = FALSE, ...)
+swrite(x, file, key = NULL, na = "", compress = FALSE, create = FALSE, ...)
 }
 \arguments{
 \item{x}{the data to write. It gets internally coerced to \code{data.table} preserving col names but not row names.}
@@ -16,6 +16,8 @@ swrite(x, file, key = NULL, na = "", compress = FALSE, ...)
 \item{na}{the string to use for missing values in the data.}
 
 \item{compress}{if \code{TRUE}, the file format is gzipped csv. Default \code{FALSE}.}
+
+\item{create}{if \code{TRUE}, creates the directory if it does not exist.}
 
 \item{...}{additional arguments passed to \code{\link[data.table]{fwrite}}.}
 }
