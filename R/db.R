@@ -96,9 +96,11 @@ dbImportTable <- function(
     na.strings, 
     ...) {
   
-  if(verbose) cat(sprintf("Import table: %s\n", name))
-
-  if(dbExistsTable(conn, name = name) & !overwrite){
+  exists <- dbExistsTable(conn, name = name)
+  
+  if(verbose) cat(sprintf("Table: %s\n", name))
+  
+  if(exists & !overwrite){
     
     if(verbose) cat(sprintf(
       "  -> skipped. Table %s already exists and overwrite=FALSE.\n", 
@@ -107,7 +109,7 @@ dbImportTable <- function(
     
   }
   
-  else{
+  else {
     
     if(is.character(table)){
       
@@ -125,7 +127,7 @@ dbImportTable <- function(
       
     }
     
-    else if (is.data.table(table) & is.null(index)){
+    else if(is.data.table(table) & is.null(index)){
       
       index <- key(table)
       
