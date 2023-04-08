@@ -135,7 +135,8 @@ dbImportTable <- function(
     
     if(verbose) cat("  ->  sanitizing data...\n")
     
-    table <- as.data.frame(table)
+    table <- data.frame(table)
+    index <- tolower(index)
     colnames(table) <- tolower(colnames(table))
     
     for(i in colnames(table))
