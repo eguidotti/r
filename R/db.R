@@ -27,7 +27,7 @@
 #'
 dbImport <- function(
     conn, 
-    data, 
+    table, 
     name = NULL,
     pattern = "\\.(rds|csv|gz)$", 
     index = NULL,
@@ -36,9 +36,9 @@ dbImport <- function(
     na.strings = "", 
     ...) {
   
-  if(is.character(data) && dir.exists(data)){
+  if(is.character(table) && dir.exists(table)){
 
-    for(file in list.files(path = data, pattern = pattern, full.names = TRUE)){
+    for(file in list.files(path = table, pattern = pattern, full.names = TRUE)){
       
       dbImportTable(
         conn, 
