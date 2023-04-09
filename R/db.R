@@ -102,10 +102,9 @@ dbImportTable <- function(
   
   if(exists & !overwrite){
     
-    if(verbose) cat(sprintf(
-      "  -> skipped. Table %s already exists and overwrite=FALSE.\n", 
-      name
-    ))
+    if(verbose) cat(
+      "  -> skipped. Table already exists and overwrite=FALSE.\n"
+    )
     
   }
   
@@ -147,9 +146,8 @@ dbImportTable <- function(
       table$itemlongdesc <- gsub("[\x80-\xff]", "", table$itemlongdesc)
     
     if(verbose) cat(sprintf(
-      "  ->  %s table %s...\n", 
-      ifelse(exists, "overwriting", "creating"), 
-      name
+      "  ->  %s table...\n", 
+      ifelse(exists, "overwriting", "creating")
     ))
     
     dbWriteTable(
