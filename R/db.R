@@ -103,7 +103,7 @@ dbImportTable <- function(
   if(exists & !overwrite){
     
     if(verbose) cat(
-      "  -> skipped. Table already exists and overwrite=FALSE.\n"
+      "  -> skipped: table already exists and overwrite=FALSE.\n"
     )
     
   }
