@@ -1,8 +1,20 @@
-# Empirical Asset Pricing in R
+# A collection of functions for R
 
-A collection of tools I use in my own research. Install with [`renv`](https://rstudio.github.io/renv/index.html):
+Install with [`renv`](https://rstudio.github.io/renv/index.html)
 
 ```R
-renv::install("eguidotti/eap")
+renv::install("eguidotti/r")
+```
+
+Load the package
+
+```R
+libraray("eguidotti")
+```
+
+See all available functions
+
+```R
+help(package = eguidotti)
 ```
 
