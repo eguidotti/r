@@ -6,7 +6,7 @@
 \usage{
 dbImport(
   conn,
-  data,
+  table,
   name = NULL,
   pattern = "\\\\.(rds|csv|gz)$",
   index = NULL,
@@ -18,6 +18,8 @@ dbImport(
 }
 \arguments{
 \item{conn}{a \code{DBIConnection} object, as returned by \code{\link[DBI]{dbConnect}}.}
+
+\item{table}{\code{data.table}, \code{data.frame}, path to a tabular data file, or path to the directory containing tabular data files.}
 
 \item{name}{table name. Used only when \code{data} is a \code{data.table} or path to file.}
 
@@ -32,8 +34,6 @@ dbImport(
 \item{na.strings}{a character vector of strings which are to be interpreted as \code{NA} values by \code{\link[data.table]{fread}}.}
 
 \item{...}{additional arguments passed to \code{\link[data.table]{fread}}.}
-
-\item{table}{\code{data.table}, \code{data.frame}, path to a tabular data file, or path to the directory containing tabular data files.}
 }
 \value{
 \code{NULL}
