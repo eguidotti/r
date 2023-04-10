@@ -17,7 +17,7 @@ swrite <- function(x, file, key = NULL, na = "", create = FALSE, ...){
   
   x <- data.table(x, key = key)
   
-  if(!is.null(key)) if(any(duplicated(x)))
+  if(!is.null(key)) if(any(duplicated(x, by = key)))
     stop(sprintf("Duplicated rows for %s", paste(key, collapse = ", ")))
   
   if(file.exists(file)) 
