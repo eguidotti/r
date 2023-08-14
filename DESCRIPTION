@@ -13,5 +13,6 @@ Depends:
     data.table
 Imports: 
     DBI,
+    xtable,
     texreg,
     ggplot2
