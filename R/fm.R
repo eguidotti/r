@@ -25,7 +25,7 @@ fm <- function(x, formula, by, weights = NULL, nmin = 0){
          na.action = na.omit)
     )))
     
-    if(class(mod)=="try-error" || nobs(mod) < nmin) 
+    if(is(mod, "try-error") || nobs(mod) < nmin) 
       return(NULL)
     
     return(as.list(c("NOBS" = nobs(mod), mod$coefficients)))

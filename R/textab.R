@@ -1,13 +1,21 @@
-#' Prints an xtable in bold by 
+#' Convert a data frame to a LaTeX table
 #' 
-#' If 'which' is given it should be a logical matrix specifying bold cells.
+#' Converts a data frame to LaTeX or HTML.
+#' If \code{bold.which} is given it should be a logical matrix specifying bold cells.
 #' Otherwise: in each column or row with numeric data, the maximum or minimum
-#' value is set bold; 'max' can have entries for each column/row, NA means skip.
+#' value is set bold; \code{bold.max} can have entries for each column/row, \code{NA} means skip.
 #' 
-#' @param x an object of class \link[xtable]{xtable}.
-#' @param which logical matrix specifying bold cells.
-#' @param each axis along which to compute the max/min. Possible values for \code{each} are "row" or "column".
-#' @param max \code{TRUE} for max and \code{FALSE} for min.
+#' @param x a data frame.
+#' @param file using this argument, the resulting table is written to a file rather than to the R prompt. The file name can be specified as a character string.
+#' @param caption argument passed to \link[xtable]{xtable}.
+#' @param label argument passed to \link[xtable]{xtable}.
+#' @param align argument passed to \link[xtable]{xtable}.
+#' @param digits argument passed to \link[xtable]{xtable}.
+#' @param display argument passed to \link[xtable]{xtable}.
+#' @param auto argument passed to \link[xtable]{xtable}.
+#' @param bold.which logical matrix specifying bold cells.
+#' @param bold.each axis along which to compute the max/min. Possible values for \code{each} are "row" or "column".
+#' @param bold.max whether to boldify maximum values (\code{TRUE}) or minimum values (\code{FALSE}).
 #' @param NA.string string to be used for missing values in table entries.
 #' @param type type of table to produce. Possible values for type are "latex" or "html".
 #' @param sanitize.text.function argument passed to \link[xtable]{print.xtable}.
@@ -16,40 +24,58 @@
 #' @param ... additional arguments passed to \link[xtable]{print.xtable}.
 #' 
 #' @examples
-#' library(xtable)
 #' x <- tail(iris[,1:4])
-#' printbold(xtable(x))
-#' printbold(xtable(x), each = "column", max = c(F, NA, NA, T, NA))
-#' printbold(xtable(x), each = "row", max = FALSE)
-#' printbold(xtable(x), x >= 6.5, type = "html")
+#' textab(x)
+#' textab(x, bold.each = "column", bold.max = c(FALSE, NA, NA, TRUE))
+#' textab(x, bold.each = "row", bold.max = FALSE)
+#' textab(x, bold.which = x >= 6.5)
 #' 
 #' @note
 #' The code is adopted from \url{https://gist.github.com/floybix/452201}
 #' 
+#' @import xtable
+#' 
 #' @export
 #' 
-printbold <- function(
+textab <- function(
     x, 
-    which = NULL, 
-    each = c("column", "row"), 
-    max = TRUE,
-    NA.string = "", 
+    file = "",
     type = c("latex", "html"),
+    caption = NULL,
+    label = NULL,
+    align = NULL,
+    digits = NULL,
+    display = NULL,
+    auto = FALSE,
+    bold.which = NULL, 
+    bold.each = c("column", "row"), 
+    bold.max = NA,
+    NA.string = "", 
     sanitize.text.function = force,
     sanitize.rownames.function = NULL,
     sanitize.colnames.function = NULL, 
     ...
 ){
-  
-  stopifnot(inherits(x, "xtable"))
-  each <- match.arg(each)
+
+  x <- xtable(
+    x, 
+    caption = caption,
+    label = label,
+    align = align,
+    digits = digits,
+    display = display,
+    auto = auto
+  )  
+
+  max <- bold.max
+  each <- match.arg(bold.each)
   type <- match.arg(type)
   digits <- rep(digits(x), length = ncol(x)+1)
   
-  if (!is.null(which)) {
-    stopifnot(nrow(which) == nrow(x))
-    stopifnot(ncol(which) == ncol(x))
-    boldmatrix <- which
+  if (!is.null(bold.which)) {
+    stopifnot(nrow(bold.which) == nrow(x))
+    stopifnot(ncol(bold.which) == ncol(x))
+    boldmatrix <- bold.which
   } else {
     boldmatrix <- matrix(FALSE, ncol = ncol(x), nrow = nrow(x))
     ## round values before calculating max/min to avoid trivial diffs

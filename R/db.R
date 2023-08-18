@@ -23,6 +23,8 @@
 #' dbInit(conn, path)
 #' }
 #'
+#' @import DBI
+#'
 #' @export
 #'
 dbImport <- function(

@@ -4,12 +4,14 @@
 \alias{as.Date.integer}
 \title{Convert YYYYMM to Date}
 \usage{
-\method{as.Date}{integer}(x, day = "01")
+\method{as.Date}{integer}(x, day = "01", ...)
 }
 \arguments{
 \item{x}{\code{integer} vector.}
 
 \item{day}{\code{character} specifying the day of the month.}
+
+\item{...}{additional arguments passed to \link[base]{as.Date}.}
 }
 \value{
 vector of \code{Date}s
