@@ -129,7 +129,7 @@ textab <- function(
     }
   }
   
-  print(x, ..., type = type, NA.string = NA.string,
+  print(x, ..., file = file, type = type, NA.string = NA.string,
         sanitize.text.function = sanitize.text.function,
         sanitize.rownames.function = sanitize.rownames.function,
         sanitize.colnames.function = sanitize.colnames.function)
