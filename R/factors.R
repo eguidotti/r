@@ -45,7 +45,7 @@ factorIML <- function(illiq, sdret, ret, by, weight = 1, nyse = TRUE){
     BY = by, 
     key = "BY"))
   
-  x[, PTF.SDRET := ntile(SDRET, n = c(0, 0.3, 0.7, 1), y = SDRET[NYSE]), by = BY]
+  x[, PTF.SDRET := ntile(SDRET, n = 3, y = SDRET[NYSE]), by = BY]
   x[, PTF.ILLIQ := ntile(ILLIQ, n = 5, y = ILLIQ[NYSE]), by = .(BY, PTF.SDRET)]
   
   x <- x[!is.na(PTF.SDRET) & !is.na(PTF.ILLIQ)]
